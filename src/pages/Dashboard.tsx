@@ -3,11 +3,12 @@ import { Input } from '@/components/ui/input';
 import { todoAppService } from '@/dataservices/todolist';
 import { useQuery } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import _ from 'lodash';
 
 const Dashboard = () => {
   const [todo, setTodo] = useState('');
-  const { getTasks, createTask, deleteTask } = todoAppService();
+  const { getTasks, createTask, updateTask, deleteTask } = todoAppService();
 
   const { data: tasks, refetch: refetchTasks } = useQuery({
     queryKey: ['tasks'],
@@ -31,6 +32,30 @@ const Dashboard = () => {
       console.error('Error creating task:', error);
     }
   };
+
+  const handleUpdateTask = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
+      const value = e.target.value;
+      await updateTask({
+        id,
+        description: value,
+        isCompleted: false,
+        priority: 'low',
+      });
+      await refetchTasks();
+    },
+    [updateTask, refetchTasks],
+  );
+
+  const debounceHandler = useMemo(
+    () =>
+      _.debounce(
+        (e: React.ChangeEvent<HTMLInputElement>, id: string) =>
+          handleUpdateTask(e, id),
+        800,
+      ),
+    [handleUpdateTask],
+  );
 
   const handleDeleteTask = async (id: string) => {
     await deleteTask({ id });
@@ -59,7 +84,11 @@ const Dashboard = () => {
           {taskMemo?.map((task) => (
             <div key={task.id} className="flex items-center w-full gap-2">
               <div className="flex-grow">
-                <Input className="w-full" value={task.description} />
+                <Input
+                  className="w-full"
+                  defaultValue={task.description}
+                  onChange={(e) => debounceHandler(e, task.id)}
+                />
               </div>
               <Button size="sm" onClick={() => handleDeleteTask(task.id)}>
                 Delete

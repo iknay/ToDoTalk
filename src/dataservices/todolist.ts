@@ -40,7 +40,7 @@ export const todoAppService = () => {
 
   const updateTask = async (payload: IUpdateTaskRequestPayload) => {
     const response = await PUT<IUpdateTaskResponsePayload, any>({
-      url: TODO_APP.UPDATE_TASK,
+      url: `${TODO_APP.UPDATE_TASK}/${payload.id}`,
       data: payload,
     });
     return response.data;

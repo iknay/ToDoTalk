@@ -25,7 +25,7 @@ export const createTaskResponsePayloadSchema = z.object({
 });
 
 export const getTaskRequestPayloadSchema = z.object({
-  taskId: z.string(),
+  id: z.string(),
 });
 
 export const getTaskResponsePayloadSchema = z.object({
@@ -37,8 +37,10 @@ export const getTaskResponsePayloadSchema = z.object({
 });
 
 export const updateTaskRequestPayloadSchema = z.object({
+  id: z.string(),
   isCompleted: z.boolean(),
   description: z.string(),
+  priority: z.string(),
 });
 
 export const updateTaskResponsePayloadSchema = z.object({
