@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { AUTH_ROUTES } from '@/routings/authRoutes';
+import { useAuthStore } from '@/zustand/stores/authStore';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
@@ -7,8 +8,10 @@ interface Props {
 }
 
 const NavigationBar = ({ children }: Props) => {
+  const removeUser = useAuthStore.use.removeUser();
   const navigate = useNavigate();
   const handleSignOut = () => {
+    removeUser();
     navigate(AUTH_ROUTES.SIGNIN);
   };
 

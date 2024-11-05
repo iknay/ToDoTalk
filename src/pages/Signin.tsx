@@ -2,12 +2,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AUTH_ROUTES } from '@/routings/authRoutes';
 import { MAIN_ROUTES } from '@/routings/mainRoutes';
+import { useAuthStore } from '@/zustand/stores/authStore';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Signin = () => {
   const navigate = useNavigate();
   const formRef = useRef<any>();
+
+  const setUser = useAuthStore.use.setUser();
 
   const dummyDatabase = {
     users: [
@@ -19,10 +22,14 @@ const Signin = () => {
     e.preventDefault();
     const { email, password } = formRef?.current;
     const userCredentials = dummyDatabase.users.find(
-      (user) => user.email === email && user.password === password,
+      (user) => user.email === email.value && user.password === password.value,
     );
 
+    console.log({ email: email.value, password: password.value });
+    console.log(userCredentials);
+
     if (userCredentials) {
+      setUser({ email: email.value });
       navigate(MAIN_ROUTES.DASHBOARD);
     }
   };
