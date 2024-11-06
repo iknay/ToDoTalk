@@ -6,7 +6,7 @@ const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="p-6 bg-[#f8f8f8] w-screen">
+      <main className="p-6 bg-[#f8f8f8] w-screen overflow-hidden">
         <SidebarTrigger />
         {children}
       </main>

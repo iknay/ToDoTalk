@@ -18,8 +18,11 @@ export default {
         },
       },
       colors: {
-        primary: '#db6c3c',
+        primary: '#4a3aff',
         secondary: '#ffffff',
+        muted: '#9c9c9c',
+        black: '#2b2b2b',
+        popover: '#ffffff',
       },
     },
   },

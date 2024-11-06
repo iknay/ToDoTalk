@@ -29,7 +29,7 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar className="p-4">
+    <Sidebar className="p-4 border-none">
       <SidebarHeader>
         <h1>Logo</h1>
       </SidebarHeader>

@@ -5,23 +5,26 @@ export const getTasksResponsePayloadSchema = z.array(
     id: z.string(),
     createdAt: z.string(),
     isCompleted: z.boolean(),
-    description: z.string(),
+    title: z.string(),
     priority: z.string(),
+    description: z.string().optional(),
   }),
 );
 
 export const createTaskRequestPayloadSchema = z.object({
   isCompleted: z.boolean(),
-  description: z.string(),
+  title: z.string(),
   priority: z.string(),
+  description: z.string().optional(),
 });
 
 export const createTaskResponsePayloadSchema = z.object({
   id: z.string(),
   createdAt: z.string(),
   isCompleted: z.boolean(),
-  description: z.string(),
+  title: z.string(),
   priority: z.string(),
+  description: z.string(),
 });
 
 export const getTaskRequestPayloadSchema = z.object({
@@ -32,14 +35,14 @@ export const getTaskResponsePayloadSchema = z.object({
   id: z.string(),
   createdAt: z.string(),
   isCompleted: z.boolean(),
-  description: z.string(),
+  title: z.string(),
   priority: z.string(),
 });
 
 export const updateTaskRequestPayloadSchema = z.object({
   id: z.string(),
   isCompleted: z.boolean(),
-  description: z.string(),
+  title: z.string(),
   priority: z.string(),
 });
 
@@ -47,7 +50,7 @@ export const updateTaskResponsePayloadSchema = z.object({
   id: z.string(),
   createdAt: z.string(),
   isCompleted: z.boolean(),
-  description: z.string(),
+  title: z.string(),
   priority: z.string(),
 });
 
@@ -57,4 +60,13 @@ export const deleteTaskRequestPayloadSchema = z.object({
 
 export const deleteTaskResponsePayloadSchema = z.object({
   message: z.string(),
+});
+
+export const taskSchema = z.object({
+  id: z.string(),
+  createdAt: z.string(),
+  isCompleted: z.boolean(),
+  title: z.string(),
+  priority: z.string(),
+  description: z.string().optional(),
 });

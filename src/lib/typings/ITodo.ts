@@ -6,10 +6,13 @@ import {
   getTaskRequestPayloadSchema,
   getTaskResponsePayloadSchema,
   getTasksResponsePayloadSchema,
+  taskSchema,
   updateTaskRequestPayloadSchema,
   updateTaskResponsePayloadSchema,
 } from '@/schema/todo';
 import { z } from 'zod';
+
+export type ITask = z.infer<typeof taskSchema>;
 
 export type IGetTasksResponsePayload = z.infer<
   typeof getTasksResponsePayloadSchema

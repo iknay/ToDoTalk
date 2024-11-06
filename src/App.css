@@ -5,3 +5,9 @@
   align-items: center;
   height: 100vh;
 }
+
+.background-image {
+  background-image: url('./assets/heart.jpg');
+  background-size: cover;
+  background-position: center;
+}
