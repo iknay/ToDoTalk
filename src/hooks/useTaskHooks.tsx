@@ -1,6 +1,6 @@
 import { todoAppService } from '@/dataservices/todolist';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useCallback, useMemo } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useCallback, useMemo } from 'react';
 import _ from 'lodash';
 import { ITask } from '@/lib/typings/ITodo';
 
@@ -8,6 +8,16 @@ const useTaskHooks = () => {
   const { getTasks, createTask, updateTask, deleteTask } = todoAppService();
 
   const queryClient = useQueryClient();
+
+  const { mutateAsync: createTaskMutation } = useMutation({
+    mutationFn: createTask,
+  });
+  const { mutateAsync: updateTaskMutation } = useMutation({
+    mutationFn: updateTask,
+  });
+  const { mutateAsync: deleteTaskMutation } = useMutation({
+    mutationFn: deleteTask,
+  });
 
   const getAllTasks = () => {
     return useQuery({
@@ -17,19 +27,12 @@ const useTaskHooks = () => {
     });
   };
 
-  const handleCreateTask = async ({
-    e,
-    task,
-  }: {
-    e: React.KeyboardEvent<HTMLInputElement>;
-    task: ITask;
-  }) => {
-    e.currentTarget.value = '';
+  const handleCreateTask = async ({ task }: { task: ITask }) => {
     try {
-      await createTask({
-        title: task.title,
-        isCompleted: task.isCompleted!,
-        priority: task.priority,
+      await createTaskMutation({
+        title: task.title!,
+        isCompleted: false,
+        priority: task.priority!,
         description: '',
       });
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
@@ -39,13 +42,12 @@ const useTaskHooks = () => {
   };
 
   const handleUpdateTask = useCallback(
-    async (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
-      const value = e.target.value;
-      await updateTask({
-        id,
-        title: value,
-        isCompleted: false,
-        priority: 'low',
+    async ({ task }: { task: ITask }) => {
+      await updateTaskMutation({
+        id: task.id!,
+        title: task.title!,
+        isCompleted: task.isCompleted || false,
+        priority: task.priority || 'low',
       });
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
@@ -53,17 +55,12 @@ const useTaskHooks = () => {
   );
 
   const handleDeleteTask = async (id: string) => {
-    await deleteTask({ id });
+    await deleteTaskMutation({ id });
     queryClient.invalidateQueries({ queryKey: ['tasks'] });
   };
 
   const debounceHandler = useMemo(
-    () =>
-      _.debounce(
-        (e: React.ChangeEvent<HTMLInputElement>, id: string) =>
-          handleUpdateTask(e, id),
-        800,
-      ),
+    () => _.debounce((task: ITask) => handleUpdateTask({ task }), 500),
     [handleUpdateTask],
   );
 

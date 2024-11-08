@@ -12,6 +12,7 @@ import {
 import TaskItem from './TaskItem';
 import useTaskHooks from '@/hooks/useTaskHooks';
 import { Plus } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const Tasks = () => {
   const [todo, setTodo] = useState('');
@@ -28,25 +29,21 @@ const Tasks = () => {
   return (
     <>
       <Input
-        className="w-full placeholder:text-black"
+        className={cn('w-full border-dashed', isFocused ? 'border-solid' : '')}
         placeholder={isFocused ? '' : 'New Task'}
-        icon={
-          isFocused ? (
-            <Checkbox
-              onCheckedChange={() => setIsCompleted(!isCompleted)}
-              checked={isCompleted}
-            />
-          ) : (
-            <Plus />
-          )
-        }
+        icon={<Plus className={isFocused ? 'text-primary' : ''} />}
         onFocus={() => setIsFocused(true)}
+        onBlur={() => {
+          if (todo === '') {
+            setIsFocused(false);
+          }
+        }}
         onChange={(e) => setTodo(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === 'Enter' && e.currentTarget.value) {
+            e.currentTarget.value = '';
             setTodo('');
             handleCreateTask({
-              e,
               task: {
                 createdAt: new Date().toISOString(),
                 title: todo,
@@ -60,10 +57,10 @@ const Tasks = () => {
         }}
         children={
           <Select onValueChange={(value) => setPriority(value)}>
-            <SelectTrigger className="w-[8rem] border-none text-sm text-end items-end">
+            <SelectTrigger className="max-w-[8rem] border-none text-sm space-x-3">
               <SelectValue placeholder="Set Priority" />
             </SelectTrigger>
-            <SelectContent className="text-medium">
+            <SelectContent className="text-medium w-[6rem]">
               <SelectItem value="low" className="text-green-500">
                 Low
               </SelectItem>

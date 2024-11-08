@@ -1,30 +1,11 @@
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-} from '@/components/ui/select';
-import {
-  Sheet,
-  SheetDescription,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet';
 import useTaskHooks from '@/hooks/useTaskHooks';
 import { ITask } from '@/lib/typings/ITodo';
 import { cn } from '@/lib/utils';
-import { Separator } from '@radix-ui/react-separator';
-import { EllipsisVertical, Pencil, Trash } from 'lucide-react';
+import { Trash } from 'lucide-react';
+import EditTask from './EditTask';
 
 interface TaskItemProps {
   task: ITask;
@@ -36,11 +17,11 @@ const TaskItem = ({ task }: TaskItemProps) => {
   const getBadgeColor = (priority: string) => {
     switch (priority) {
       case 'low':
-        return 'text-green-500 bg-green-500/10';
+        return 'text-green-500 bg-green-500/10 hover:border-green-500';
       case 'medium':
-        return 'text-yellow-500 bg-yellow-500/10';
+        return 'text-yellow-500 bg-yellow-500/10 hover:border-yellow-500';
       case 'high':
-        return 'text-red-500 bg-red-500/10';
+        return 'text-red-500 bg-red-500/10 hover:border-red-500';
       default:
         return 'text-gray-500';
     }
@@ -48,37 +29,35 @@ const TaskItem = ({ task }: TaskItemProps) => {
 
   return (
     <>
-      <Checkbox />
+      <Checkbox
+        onCheckedChange={(e: boolean) => {
+          console.log(e);
+          debounceHandler({ ...task, isCompleted: e });
+        }}
+      />
 
       <div className="flex-grow">
         <Input
-          className="w-full font-medium truncate border-none focus-visible:ring-0"
+          className={cn(
+            'w-full truncate border-none focus-visible:ring-0',
+            task.isCompleted && 'opacity-40 line-through',
+          )}
           defaultValue={task.title}
-          onChange={(e) => debounceHandler(e, task.id!)}
+          onChange={(e) => debounceHandler({ ...task, title: e.target.value })}
         />
       </div>
 
       <Badge
-        variant="secondary"
-        className={cn('capitalize', getBadgeColor(task.priority))}
+        variant="outline"
+        className={cn(
+          'capitalize cursor-default border-transparent',
+          getBadgeColor(task.priority || 'low'),
+        )}
       >
         {task.priority}
       </Badge>
 
-      <Sheet>
-        <SheetTrigger className="p-1 transition duration-300 rounded-md hover:bg-muted/20">
-          <Pencil size={16} />
-        </SheetTrigger>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Are you absolutely sure?</SheetTitle>
-            <SheetDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </SheetDescription>
-          </SheetHeader>
-        </SheetContent>
-      </Sheet>
+      <EditTask task={task} />
 
       <span
         className="p-1 transition duration-300 rounded-md cursor-pointer hover:bg-muted/20"

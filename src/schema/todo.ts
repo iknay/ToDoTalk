@@ -37,6 +37,7 @@ export const getTaskResponsePayloadSchema = z.object({
   isCompleted: z.boolean(),
   title: z.string(),
   priority: z.string(),
+  description: z.string(),
 });
 
 export const updateTaskRequestPayloadSchema = z.object({
@@ -44,6 +45,7 @@ export const updateTaskRequestPayloadSchema = z.object({
   isCompleted: z.boolean(),
   title: z.string(),
   priority: z.string(),
+  description: z.string().optional(),
 });
 
 export const updateTaskResponsePayloadSchema = z.object({
@@ -52,6 +54,7 @@ export const updateTaskResponsePayloadSchema = z.object({
   isCompleted: z.boolean(),
   title: z.string(),
   priority: z.string(),
+  description: z.string(),
 });
 
 export const deleteTaskRequestPayloadSchema = z.object({
@@ -65,8 +68,8 @@ export const deleteTaskResponsePayloadSchema = z.object({
 export const taskSchema = z.object({
   id: z.string().optional(),
   createdAt: z.string().optional(),
-  isCompleted: z.boolean(),
-  title: z.string(),
-  priority: z.string(),
+  isCompleted: z.boolean().optional(),
+  title: z.string().optional(),
+  priority: z.string().optional(),
   description: z.string().optional(),
 });
