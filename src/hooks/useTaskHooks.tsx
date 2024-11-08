@@ -2,6 +2,7 @@ import { todoAppService } from '@/dataservices/todolist';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useMemo } from 'react';
 import _ from 'lodash';
+import { ITask } from '@/lib/typings/ITodo';
 
 const useTaskHooks = () => {
   const { getTasks, createTask, updateTask, deleteTask } = todoAppService();
@@ -16,16 +17,19 @@ const useTaskHooks = () => {
     });
   };
 
-  const handleCreateTask = async (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    title: string,
-  ) => {
+  const handleCreateTask = async ({
+    e,
+    task,
+  }: {
+    e: React.KeyboardEvent<HTMLInputElement>;
+    task: ITask;
+  }) => {
     e.currentTarget.value = '';
     try {
       await createTask({
-        title,
-        isCompleted: false,
-        priority: 'low',
+        title: task.title,
+        isCompleted: task.isCompleted!,
+        priority: task.priority,
         description: '',
       });
       queryClient.invalidateQueries({ queryKey: ['tasks'] });

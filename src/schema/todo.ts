@@ -63,8 +63,8 @@ export const deleteTaskResponsePayloadSchema = z.object({
 });
 
 export const taskSchema = z.object({
-  id: z.string(),
-  createdAt: z.string(),
+  id: z.string().optional(),
+  createdAt: z.string().optional(),
   isCompleted: z.boolean(),
   title: z.string(),
   priority: z.string(),

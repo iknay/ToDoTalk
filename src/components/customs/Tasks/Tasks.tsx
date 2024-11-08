@@ -11,9 +11,14 @@ import {
 } from '@/components/ui/select';
 import TaskItem from './TaskItem';
 import useTaskHooks from '@/hooks/useTaskHooks';
+import { Plus } from 'lucide-react';
 
 const Tasks = () => {
   const [todo, setTodo] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
+  const [priority, setPriority] = useState('low');
+  const [isCompleted, setIsCompleted] = useState(false);
+
   const { getAllTasks, handleCreateTask } = useTaskHooks();
 
   const { data: tasks } = getAllTasks();
@@ -23,25 +28,51 @@ const Tasks = () => {
   return (
     <>
       <Input
-        className="w-full"
-        placeholder="New Task"
-        icon={<Checkbox />}
+        className="w-full placeholder:text-black"
+        placeholder={isFocused ? '' : 'New Task'}
+        icon={
+          isFocused ? (
+            <Checkbox
+              onCheckedChange={() => setIsCompleted(!isCompleted)}
+              checked={isCompleted}
+            />
+          ) : (
+            <Plus />
+          )
+        }
+        onFocus={() => setIsFocused(true)}
         onChange={(e) => setTodo(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === 'Enter' && e.currentTarget.value) {
-            setTodo(`${todo}`);
-            handleCreateTask(e, todo);
+            setTodo('');
+            handleCreateTask({
+              e,
+              task: {
+                createdAt: new Date().toISOString(),
+                title: todo,
+                priority: priority,
+                isCompleted: isCompleted,
+              },
+            });
+            setIsFocused(false);
+            setIsCompleted(false);
           }
         }}
         children={
-          <Select>
-            <SelectTrigger className="w-[8rem] border-none">
+          <Select onValueChange={(value) => setPriority(value)}>
+            <SelectTrigger className="w-[8rem] border-none text-sm text-end items-end">
               <SelectValue placeholder="Set Priority" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="low">Low</SelectItem>
-              <SelectItem value="medium">Medium</SelectItem>
-              <SelectItem value="high">High</SelectItem>
+            <SelectContent className="text-medium">
+              <SelectItem value="low" className="text-green-500">
+                Low
+              </SelectItem>
+              <SelectItem value="medium" className="text-yellow-500">
+                Medium
+              </SelectItem>
+              <SelectItem value="high" className="text-red-500">
+                High
+              </SelectItem>
             </SelectContent>
           </Select>
         }

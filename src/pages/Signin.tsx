@@ -14,7 +14,7 @@ const Signin = () => {
 
   const dummyDatabase = {
     users: [
-      { username: 'user', email: 'admin@admin.com', password: 'password' },
+      { username: 'user', email: 'admin@admin.com', password: 'admin123' },
     ],
   };
 

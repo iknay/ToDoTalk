@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/sheet';
 import useTaskHooks from '@/hooks/useTaskHooks';
 import { ITask } from '@/lib/typings/ITodo';
+import { cn } from '@/lib/utils';
 import { Separator } from '@radix-ui/react-separator';
 import { EllipsisVertical, Pencil, Trash } from 'lucide-react';
 
@@ -31,6 +32,20 @@ interface TaskItemProps {
 
 const TaskItem = ({ task }: TaskItemProps) => {
   const { handleDeleteTask, debounceHandler } = useTaskHooks();
+
+  const getBadgeColor = (priority: string) => {
+    switch (priority) {
+      case 'low':
+        return 'text-green-500 bg-green-500/10';
+      case 'medium':
+        return 'text-yellow-500 bg-yellow-500/10';
+      case 'high':
+        return 'text-red-500 bg-red-500/10';
+      default:
+        return 'text-gray-500';
+    }
+  };
+
   return (
     <>
       <Checkbox />
@@ -39,11 +54,16 @@ const TaskItem = ({ task }: TaskItemProps) => {
         <Input
           className="w-full font-medium truncate border-none focus-visible:ring-0"
           defaultValue={task.title}
-          onChange={(e) => debounceHandler(e, task.id)}
+          onChange={(e) => debounceHandler(e, task.id!)}
         />
       </div>
 
-      <Badge variant="secondary">{task.priority}</Badge>
+      <Badge
+        variant="secondary"
+        className={cn('capitalize', getBadgeColor(task.priority))}
+      >
+        {task.priority}
+      </Badge>
 
       <Sheet>
         <SheetTrigger className="p-1 transition duration-300 rounded-md hover:bg-muted/20">
@@ -62,7 +82,7 @@ const TaskItem = ({ task }: TaskItemProps) => {
 
       <span
         className="p-1 transition duration-300 rounded-md cursor-pointer hover:bg-muted/20"
-        onClick={() => handleDeleteTask(task.id)}
+        onClick={() => handleDeleteTask(task.id!)}
       >
         <Trash size={16} />
       </span>
