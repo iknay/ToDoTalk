@@ -32,7 +32,7 @@ const useTaskHooks = () => {
       await createTaskMutation({
         title: task.title!,
         isCompleted: false,
-        priority: task.priority!,
+        priority: task.priority! || 'low',
         description: '',
       });
       queryClient.invalidateQueries({ queryKey: ['tasks'] });

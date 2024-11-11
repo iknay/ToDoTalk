@@ -16,7 +16,7 @@ const Dashboard = () => {
           <h1 className="text-4xl font-bold">Hello, Yancee!</h1>
           <p className="text-sm text-muted">It's {date}</p>
         </div>
-        <div className="h-full p-4 space-y-4 rounded-xl bg-secondary">
+        <div className="h-full p-4 pb-0 space-y-4 rounded-xl bg-secondary">
           <Tasks />
         </div>
       </div>

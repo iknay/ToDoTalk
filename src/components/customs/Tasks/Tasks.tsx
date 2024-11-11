@@ -1,7 +1,6 @@
 import { Input } from '@/components/ui/input';
 import { useMemo, useState } from 'react';
 import _ from 'lodash';
-import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
   SelectValue,
@@ -53,10 +52,14 @@ const Tasks = () => {
             });
             setIsFocused(false);
             setIsCompleted(false);
+            setPriority('');
           }
         }}
         children={
-          <Select onValueChange={(value) => setPriority(value)}>
+          <Select
+            onValueChange={(value) => setPriority(value)}
+            value={priority}
+          >
             <SelectTrigger className="max-w-[8rem] border-none text-sm space-x-3">
               <SelectValue placeholder="Set Priority" />
             </SelectTrigger>
@@ -75,7 +78,7 @@ const Tasks = () => {
         }
       />
 
-      <div className="w-full space-y-4 ">
+      <div className="flex-grow w-full h-[calc(100vh-16rem)] space-y-4 scrollbar">
         {taskMemo?.map((task) => (
           <div key={task.id} className="flex items-center w-full gap-2 px-1">
             <TaskItem task={task} />
