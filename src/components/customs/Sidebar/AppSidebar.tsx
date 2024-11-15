@@ -11,8 +11,10 @@ import {
 } from '@/components/ui/sidebar';
 import { SidebarLang } from '@/lib/lang/sidebarLang';
 import { SidebarUser } from './SidebarUser';
+import { useNavigate } from 'react-router-dom';
 
 export function AppSidebar() {
+  const navigate = useNavigate();
   return (
     <Sidebar collapsible="icon" className="border-none">
       <SidebarHeader>
@@ -24,11 +26,9 @@ export function AppSidebar() {
             {SidebarLang.items.map((item) => {
               return (
                 <SidebarMenuItem key={item.label}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.href}>
-                      {item.icon}
-                      <span>{item.label}</span>
-                    </a>
+                  <SidebarMenuButton onClick={() => navigate(item.href)}>
+                    {item.icon}
+                    {item.label}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               );

@@ -32,7 +32,12 @@ const TaskItem = ({ task }: TaskItemProps) => {
       <Checkbox
         onCheckedChange={(e: boolean) => {
           console.log(e);
-          debounceHandler({ ...task, isCompleted: e });
+          debounceHandler({
+            id: task.id!,
+            isCompleted: e,
+            title: task.title!,
+            priority: task.priority!,
+          });
         }}
       />
 
@@ -43,7 +48,14 @@ const TaskItem = ({ task }: TaskItemProps) => {
             task.isCompleted && 'opacity-40 line-through',
           )}
           defaultValue={task.title}
-          onChange={(e) => debounceHandler({ ...task, title: e.target.value })}
+          onChange={(e) =>
+            debounceHandler({
+              id: task.id!,
+              isCompleted: task.isCompleted!,
+              title: e.target.value,
+              priority: task.priority!,
+            })
+          }
         />
       </div>
 

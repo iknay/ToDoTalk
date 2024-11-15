@@ -1,4 +1,4 @@
-import { House, ListTodo, MessageCircle, Settings, User2 } from 'lucide-react';
+import { House, ListTodo, MessageCircle, Settings } from 'lucide-react';
 import avatar from '@/assets/avatar.jpg';
 
 export const SidebarLang = {

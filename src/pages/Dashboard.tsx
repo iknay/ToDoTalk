@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Tasks from '@/components/customs/Tasks/Tasks';
+import Tasks from '@/components/customs/Tasks/TasksTable';
 
 const Dashboard = () => {
   const date = new Date().toLocaleDateString('en-US', {
@@ -17,7 +17,7 @@ const Dashboard = () => {
           <p className="text-sm text-muted">It's {date}</p>
         </div>
         <div className="h-full p-4 pb-0 space-y-4 rounded-xl bg-secondary">
-          <Tasks />
+          {/* <Tasks /> */}
         </div>
       </div>
       <div className="h-full p-4 space-y-4 rounded-t-xl background-image min-w-[30%]" />

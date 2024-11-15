@@ -1,5 +1,5 @@
 import { Input } from '@/components/ui/input';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import _ from 'lodash';
 import {
   Select,
@@ -8,22 +8,17 @@ import {
   SelectContent,
   SelectItem,
 } from '@/components/ui/select';
-import TaskItem from './TaskItem';
 import useTaskHooks from '@/hooks/useTaskHooks';
 import { Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const Tasks = () => {
+const CreateTask = () => {
   const [todo, setTodo] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [priority, setPriority] = useState('low');
   const [isCompleted, setIsCompleted] = useState(false);
 
-  const { getAllTasks, handleCreateTask } = useTaskHooks();
-
-  const { data: tasks } = getAllTasks();
-
-  const taskMemo = useMemo(() => tasks, [tasks]);
+  const { handleCreateTask } = useTaskHooks();
 
   return (
     <>
@@ -44,10 +39,10 @@ const Tasks = () => {
             setTodo('');
             handleCreateTask({
               task: {
-                createdAt: new Date().toISOString(),
                 title: todo,
                 priority: priority,
                 isCompleted: isCompleted,
+                status: 'todo',
               },
             });
             setIsFocused(false);
@@ -77,16 +72,8 @@ const Tasks = () => {
           </Select>
         }
       />
-
-      <div className="flex-grow w-full h-[calc(100vh-16rem)] space-y-4 scrollbar">
-        {taskMemo?.map((task) => (
-          <div key={task.id} className="flex items-center w-full gap-2 px-1">
-            <TaskItem task={task} />
-          </div>
-        ))}
-      </div>
     </>
   );
 };
 
-export default Tasks;
+export default CreateTask;

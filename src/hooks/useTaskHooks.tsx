@@ -2,7 +2,10 @@ import { todoAppService } from '@/dataservices/todolist';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useMemo } from 'react';
 import _ from 'lodash';
-import { ITask } from '@/lib/typings/ITodo';
+import {
+  ICreateTaskRequestPayload,
+  IUpdateTaskRequestPayload,
+} from '@/lib/typings/ITodo';
 
 const useTaskHooks = () => {
   const { getTasks, createTask, updateTask, deleteTask } = todoAppService();
@@ -27,12 +30,17 @@ const useTaskHooks = () => {
     });
   };
 
-  const handleCreateTask = async ({ task }: { task: ITask }) => {
+  const handleCreateTask = async ({
+    task,
+  }: {
+    task: ICreateTaskRequestPayload;
+  }) => {
     try {
       await createTaskMutation({
         title: task.title!,
         isCompleted: false,
         priority: task.priority! || 'low',
+        status: 'todo',
         description: '',
       });
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
@@ -42,7 +50,7 @@ const useTaskHooks = () => {
   };
 
   const handleUpdateTask = useCallback(
-    async ({ task }: { task: ITask }) => {
+    async ({ task }: { task: IUpdateTaskRequestPayload }) => {
       await updateTaskMutation({
         id: task.id!,
         title: task.title!,
@@ -60,7 +68,11 @@ const useTaskHooks = () => {
   };
 
   const debounceHandler = useMemo(
-    () => _.debounce((task: ITask) => handleUpdateTask({ task }), 500),
+    () =>
+      _.debounce(
+        (task: IUpdateTaskRequestPayload) => handleUpdateTask({ task }),
+        500,
+      ),
     [handleUpdateTask],
   );
 
