@@ -4,9 +4,9 @@ import avatar from '@/assets/avatar.jpg';
 export const SidebarLang = {
   items: [
     {
-      label: 'Home',
+      label: 'Dashboard',
       icon: <House />,
-      href: '/',
+      href: '/dashboard',
     },
     {
       label: 'Tasks',

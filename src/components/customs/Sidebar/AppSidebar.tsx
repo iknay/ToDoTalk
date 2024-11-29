@@ -7,7 +7,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarRail,
 } from '@/components/ui/sidebar';
 import { SidebarLang } from '@/lib/lang/sidebarLang';
 import { SidebarUser } from './SidebarUser';
@@ -16,8 +15,8 @@ import { useNavigate } from 'react-router-dom';
 export function AppSidebar() {
   const navigate = useNavigate();
   return (
-    <Sidebar collapsible="icon" className="border-none">
-      <SidebarHeader>
+    <Sidebar collapsible="icon" className="border-r-2 border-sidebar-border">
+      <SidebarHeader className="mb-7">
         <h1>Logo</h1>
       </SidebarHeader>
       <SidebarContent>
@@ -26,7 +25,10 @@ export function AppSidebar() {
             {SidebarLang.items.map((item) => {
               return (
                 <SidebarMenuItem key={item.label}>
-                  <SidebarMenuButton onClick={() => navigate(item.href)}>
+                  <SidebarMenuButton
+                    isActive={location.pathname.includes(item.href)}
+                    onClick={() => navigate(item.href)}
+                  >
                     {item.icon}
                     {item.label}
                   </SidebarMenuButton>
@@ -36,7 +38,6 @@ export function AppSidebar() {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarRail />
       <SidebarFooter className="rounded-md ">
         <SidebarUser user={SidebarLang.user} />
       </SidebarFooter>

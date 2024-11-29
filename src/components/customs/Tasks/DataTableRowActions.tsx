@@ -18,6 +18,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { taskSchema } from '@/schema/todo';
+import useTaskHooks from '@/hooks/useTaskHooks';
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -26,6 +27,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
+  const { handleDeleteTask } = useTaskHooks();
   const task = taskSchema.parse(row.original);
 
   return (
@@ -57,7 +59,11 @@ export function DataTableRowActions<TData>({
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            handleDeleteTask(task.id);
+          }}
+        >
           Delete
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>

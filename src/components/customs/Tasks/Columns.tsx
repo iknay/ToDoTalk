@@ -6,6 +6,9 @@ import { DataTableRowActions } from './DataTableRowActions';
 import { ITask } from '@/lib/typings/ITodo';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumnHeader } from './DataTableColumnHeader';
+import { cn } from '@/lib/utils';
+import { getBadgeColor } from '@/lib/helpers/priorityColor';
+import { Badge } from '@/components/ui/badge';
 
 export const Columns: ColumnDef<ITask>[] = [
   {
@@ -52,6 +55,7 @@ export const Columns: ColumnDef<ITask>[] = [
       return (
         <div className="flex space-x-2">
           {/* {label && <Badge variant="outline">{label.label}</Badge>} */}
+
           <span className="max-w-[500px] truncate font-medium">
             {row.getValue('title')}
           </span>
@@ -96,16 +100,23 @@ export const Columns: ColumnDef<ITask>[] = [
         (priority) => priority.value === row.getValue('priority'),
       );
 
+      const priorityColor = getBadgeColor(priority?.value || '');
+
       if (!priority) {
         return null;
       }
 
       return (
-        <div className="flex items-center">
-          {priority.icon && (
-            <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-          )}
-          <span>{priority.label}</span>
+        <div className="flex items-center cursor-default">
+          <Badge
+            variant="outline"
+            className={cn(priorityColor, 'rounded-full')}
+          >
+            {priority.icon && (
+              <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+            )}
+            <span>{priority.label}</span>
+          </Badge>
         </div>
       );
     },
