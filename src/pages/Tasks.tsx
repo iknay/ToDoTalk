@@ -8,11 +8,7 @@ import { useMemo } from 'react';
 const Tasks = () => {
   const { getAllTasks } = useTaskHooks();
 
-  const {
-    data: tasks,
-    isLoading: tasksLoading,
-    isRefetching: tasksRefetching,
-  } = getAllTasks();
+  const { data: tasks, isLoading: tasksLoading } = getAllTasks();
 
   const taskMemo = useMemo(() => tasks, [tasks]);
 
@@ -34,7 +30,6 @@ const Tasks = () => {
           ) : (
             <TasksTable data={taskMemo} columns={Columns} />
           )}
-          {tasksRefetching && <Skeleton className="w-full h-[2rem]" />}
         </div>
       </div>
     </div>

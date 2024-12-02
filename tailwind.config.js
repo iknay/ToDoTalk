@@ -18,11 +18,10 @@ export default {
         },
       },
       colors: {
-        primary: '#4a3aff',
-        secondary: '#ffffff',
-        accent: '#9c9c9c20',
-        black: '#2b2b2b',
-        popover: '#ffffff',
+        primary: 'var(--primary)',
+        secondary: 'var(--background)',
+        accent: 'var(--accent)',
+        popover: 'var(--background)',
 
         sidebar: {
           DEFAULT: 'hsl(var(--sidebar-background))',

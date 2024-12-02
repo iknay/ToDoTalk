@@ -17,6 +17,8 @@
   :root {
     --background: #ffffff;
     --foreground: #2b2b2b;
+    --accent: #9c9c9c30;
+    --primary: #4a3aff;
     color: var(--foreground);
 
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -29,6 +31,12 @@
   }
 
   .dark {
+    --background: #2b2b2b;
+    --foreground: #ffffff;
+    --accent: #9c9c9c30;
+    --primary: #4a3aff;
+    color: var(--foreground);
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

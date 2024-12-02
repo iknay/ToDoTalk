@@ -60,12 +60,10 @@ const TasksTable = <TData, TValue>({
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
 
-  console.log(table);
-
   return (
     <div className="space-y-4">
       <DataTableToolbar table={table} />
-      <div className="h-[calc(100vh-17rem)] scrollbar flex border rounded-lg px-2">
+      <div className="h-[calc(100vh-15rem)] flex border rounded-lg pl-2">
         <Table>
           <TableHeader className="sticky top-0 bg-white z-10">
             {table.getHeaderGroups().map((headerGroup) => (
@@ -85,7 +83,7 @@ const TasksTable = <TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="scrollbar">
+          <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow

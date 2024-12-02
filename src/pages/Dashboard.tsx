@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import Tasks from '@/components/customs/Tasks/TasksTable';
 
 const Dashboard = () => {
   const date = new Date().toLocaleDateString('en-US', {
