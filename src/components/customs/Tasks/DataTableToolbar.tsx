@@ -1,13 +1,12 @@
 'use client';
 
 import { Table } from '@tanstack/react-table';
-import { Search, X } from 'lucide-react';
-
-import { Input } from '@/components/ui/input';
+import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DataTableFacetedFilter } from './DataTableFacetedFilter';
 import { priorities, statuses } from '@/lib/lang/tasksLang';
 import { DataTableViewOptions } from './DataTableViewOptions';
+import { SearchBar } from '../SearchBar/SearchBar';
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -48,15 +47,7 @@ export function DataTableToolbar<TData>({
       </div>
       <div className="flex items-center gap-2">
         <DataTableViewOptions table={table} />
-        <Input
-          placeholder="Search"
-          value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
-          onChange={(event) =>
-            table.getColumn('title')?.setFilterValue(event.target.value)
-          }
-          icon={<Search size={20} className="text-gray-500" />}
-          className="h-8 w-[150px] lg:w-[250px]"
-        />
+        <SearchBar table={table} />
       </div>
     </div>
   );

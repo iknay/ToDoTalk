@@ -4,11 +4,11 @@ import { ColumnDef } from '@tanstack/react-table';
 import { priorities, statuses } from '@/lib/lang/tasksLang';
 import { DataTableRowActions } from './DataTableRowActions';
 import { ITask } from '@/lib/typings/ITodo';
-import { Checkbox } from '@/components/ui/checkbox';
 import { DataTableColumnHeader } from './DataTableColumnHeader';
 import { cn } from '@/lib/utils';
 import { getBadgeColor } from '@/lib/helpers/priorityColor';
 import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@nextui-org/checkbox';
 
 export const Columns: ColumnDef<ITask>[] = [
   {
@@ -16,10 +16,9 @@ export const Columns: ColumnDef<ITask>[] = [
     header: ({ table }) => (
       <Checkbox
         checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && 'indeterminate')
+          table.getIsAllPageRowsSelected() || table.getIsSomePageRowsSelected()
         }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        onChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
         className="translate-y-[2px]"
       />
@@ -27,9 +26,10 @@ export const Columns: ColumnDef<ITask>[] = [
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        onChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
         className="translate-y-[2px]"
+        lineThrough={row.original.status === 'done'}
       />
     ),
     enableSorting: false,
