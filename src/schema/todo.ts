@@ -45,6 +45,7 @@ export const getTaskResponsePayloadSchema = z.object({
 export const updateTaskRequestPayloadSchema = z.object({
   id: z.string(),
   isCompleted: z.boolean(),
+  status: z.string(),
   title: z.string(),
   priority: z.string(),
   description: z.string().optional(),
@@ -54,6 +55,7 @@ export const updateTaskResponsePayloadSchema = z.object({
   id: z.string(),
   createdAt: z.string(),
   isCompleted: z.boolean(),
+  status: z.string(),
   title: z.string(),
   priority: z.string(),
   description: z.string(),

@@ -58,7 +58,7 @@ export function SearchBar<TData>({ table }: DataTableToolbarProps<TData>) {
       />
 
       {searchValue && searchValue !== '' && (
-        <ul className="absolute max-h-60 overflow-y-auto scrollbar bg-white shadow-md p-2 z-20 w-[200px] lg:w-[350px] rounded-md border-primary border">
+        <ul className="absolute max-h-60 overflow-y-auto scrollbar bg-secondary shadow-md p-2 z-20 w-[200px] lg:w-[350px] rounded-md border-primary border">
           {filteredData.length > 0 && searchValue !== '' ? (
             filteredData.map((item: any) => (
               <li

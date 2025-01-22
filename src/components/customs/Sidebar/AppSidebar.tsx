@@ -11,6 +11,7 @@ import {
 import { SidebarLang } from '@/lib/lang/sidebarLang';
 import { SidebarUser } from './SidebarUser';
 import { useNavigate } from 'react-router-dom';
+import ThemeToggle from '../ThemeToggle/ThemeToggle';
 
 export function AppSidebar() {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ export function AppSidebar() {
     <Sidebar collapsible="icon" className="border-r-2 border-sidebar-border">
       <SidebarHeader className="mb-7">
         <h1>Logo</h1>
+        <ThemeToggle />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

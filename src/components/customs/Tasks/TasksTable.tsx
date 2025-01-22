@@ -65,7 +65,7 @@ const TasksTable = <TData, TValue>({
       <DataTableToolbar table={table} />
       <div className="h-[calc(100vh-15rem)] flex border rounded-lg pl-2">
         <Table>
-          <TableHeader className="sticky top-0 bg-white z-10">
+          <TableHeader className="sticky top-0 bg-secondary z-10">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (

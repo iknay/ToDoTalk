@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import useTaskHooks from '@/hooks/useTaskHooks';
 import { ITask } from '@/lib/typings/ITodo';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
 
 interface IEditTask {
   task: ITask;
@@ -17,13 +18,21 @@ interface IEditTask {
 const EditTask = ({ task }: IEditTask) => {
   const { debounceHandler } = useTaskHooks();
 
+  const [isCompleted, setIsCompleted] = useState(task.isCompleted);
+
   return (
     <>
       <SheetHeader>
         <SheetTitle>Task</SheetTitle>
         <SheetDescription className="items-center space-y-1">
           <div className="flex items-center h-full">
-            <Checkbox />
+            <Checkbox
+              checked={isCompleted}
+              onCheckedChange={(e) => {
+                debounceHandler({ ...task, isCompleted: !!e });
+                setIsCompleted(!isCompleted);
+              }}
+            />
             <Input
               className={cn(
                 'w-full font-medium text-lg bg-transparent truncate border-none focus-visible:ring-0',

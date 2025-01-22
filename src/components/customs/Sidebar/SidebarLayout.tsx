@@ -12,7 +12,7 @@ const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
         </span>
       </div>
 
-      <main className="p-6 pb-0 bg-[#f8f8f8] w-screen overflow-hidden">
+      <main className="p-6 pb-0 bg-secondary w-screen overflow-hidden">
         {children}
       </main>
     </SidebarProvider>

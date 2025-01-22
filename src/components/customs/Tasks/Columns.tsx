@@ -8,7 +8,7 @@ import { DataTableColumnHeader } from './DataTableColumnHeader';
 import { cn } from '@/lib/utils';
 import { getBadgeColor } from '@/lib/helpers/priorityColor';
 import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@nextui-org/checkbox';
+import { Checkbox } from '@/components/ui/checkbox';
 
 export const Columns: ColumnDef<ITask>[] = [
   {
@@ -16,9 +16,10 @@ export const Columns: ColumnDef<ITask>[] = [
     header: ({ table }) => (
       <Checkbox
         checked={
-          table.getIsAllPageRowsSelected() || table.getIsSomePageRowsSelected()
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && 'indeterminate')
         }
-        onChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
         className="translate-y-[2px]"
       />
@@ -26,10 +27,9 @@ export const Columns: ColumnDef<ITask>[] = [
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
-        onChange={(value) => row.toggleSelected(!!value)}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
         className="translate-y-[2px]"
-        lineThrough={row.original.status === 'done'}
       />
     ),
     enableSorting: false,

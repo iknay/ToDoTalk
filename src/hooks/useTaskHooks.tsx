@@ -56,6 +56,7 @@ const useTaskHooks = () => {
         title: task.title!,
         isCompleted: task.isCompleted || false,
         priority: task.priority || 'low',
+        status: task.status || 'todo',
       });
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
